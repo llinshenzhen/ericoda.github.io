@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="llinshenzhen.github.io">
   <title>BLE超低功耗ULP的实现原理 | coding life</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ classsic bluetoothble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要2">
+  <meta name="description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ ble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要22.5ms BLE定位其它无线设备所">
 <meta name="keywords" content="ble">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BLE超低功耗ULP的实现原理">
 <meta property="og:url" content="llinshenzhen.github.io/2019/09/25/BLE超低功耗ULP的实现原理/index.html">
 <meta property="og:site_name" content="coding life">
-<meta property="og:description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ classsic bluetoothble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要2">
+<meta property="og:description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ ble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要22.5ms BLE定位其它无线设备所">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/images/ble_standard_bluetooth_wifi_channels.jpg">
 <meta property="og:image" content="https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/images/ble_protocol_arch_example_of_manufacture.jpg">
-<meta property="og:updated_time" content="2019-09-25T07:56:09.327Z">
+<meta property="og:updated_time" content="2019-09-25T07:56:42.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BLE超低功耗ULP的实现原理">
-<meta name="twitter:description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ classsic bluetoothble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要2">
+<meta name="twitter:description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ ble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要22.5ms BLE定位其它无线设备所">
 <meta name="twitter:image" content="https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/images/ble_standard_bluetooth_wifi_channels.jpg">
   
     <link rel="alternative" href="/atom.xml" title="coding life" type="application/atom+xml">
@@ -153,7 +153,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="BLE超低功耗ULP的实现原理"><a href="#BLE超低功耗ULP的实现原理" class="headerlink" title="BLE超低功耗ULP的实现原理"></a>BLE超低功耗ULP的实现原理</h1><p>ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？</p>
-<h2 id="classsic-bluetooth"><a href="#classsic-bluetooth" class="headerlink" title="classsic bluetooth"></a>classsic bluetooth</h2><h2 id="ble"><a href="#ble" class="headerlink" title="ble"></a>ble</h2><h3 id="超低功耗ULP（Ultra-Low-Power）"><a href="#超低功耗ULP（Ultra-Low-Power）" class="headerlink" title="超低功耗ULP（Ultra Low Power）"></a>超低功耗ULP（Ultra Low Power）</h3><blockquote>
+<h2 id="ble"><a href="#ble" class="headerlink" title="ble"></a>ble</h2><h3 id="超低功耗ULP（Ultra-Low-Power）"><a href="#超低功耗ULP（Ultra-Low-Power）" class="headerlink" title="超低功耗ULP（Ultra Low Power）"></a>超低功耗ULP（Ultra Low Power）</h3><blockquote>
 <p>非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道</p>
 </blockquote>
 <ul>
