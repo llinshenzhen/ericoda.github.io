@@ -6,23 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="llinshenzhen.github.io">
-  <title>BLE超低功耗ULP的实现原理 | coding life</title>
+  <title>Activity之间转场动画 | coding life</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ ble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要22.5ms BLE定位其它无线设备所">
-<meta name="keywords" content="ble">
+  <meta name="description" content="Activity之间转场动画Activity之间切换的动画是常见需求，网上搜了一下，大致有五种。肯定还有别的，我也没有别的时间去整理，写写demo当熟悉Android。整理一下如下： 利用Theme 在Manifest.xml文件中设置style theme，其名称为AppTheme  123&amp;lt;application	android:theme=&amp;quot;@style/AppTheme&amp;q">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BLE超低功耗ULP的实现原理">
-<meta property="og:url" content="llinshenzhen.github.io/2019/09/25/BLE超低功耗ULP的实现原理/index.html">
+<meta property="og:title" content="Activity之间转场动画">
+<meta property="og:url" content="llinshenzhen.github.io/2019/09/27/Activity之间转场动画/index.html">
 <meta property="og:site_name" content="coding life">
-<meta property="og:description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ ble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要22.5ms BLE定位其它无线设备所">
+<meta property="og:description" content="Activity之间转场动画Activity之间切换的动画是常见需求，网上搜了一下，大致有五种。肯定还有别的，我也没有别的时间去整理，写写demo当熟悉Android。整理一下如下： 利用Theme 在Manifest.xml文件中设置style theme，其名称为AppTheme  123&amp;lt;application	android:theme=&amp;quot;@style/AppTheme&amp;q">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/images/ble_standard_bluetooth_wifi_channels.jpg">
-<meta property="og:image" content="https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/images/ble_protocol_arch_example_of_manufacture.jpg">
-<meta property="og:updated_time" content="2019-09-27T06:46:47.579Z">
+<meta property="og:updated_time" content="2019-09-27T06:46:38.514Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BLE超低功耗ULP的实现原理">
-<meta name="twitter:description" content="BLE超低功耗ULP的实现原理ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？ ble超低功耗ULP（Ultra Low Power） 非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道   BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要22.5ms BLE定位其它无线设备所">
-<meta name="twitter:image" content="https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/images/ble_standard_bluetooth_wifi_channels.jpg">
+<meta name="twitter:title" content="Activity之间转场动画">
+<meta name="twitter:description" content="Activity之间转场动画Activity之间切换的动画是常见需求，网上搜了一下，大致有五种。肯定还有别的，我也没有别的时间去整理，写写demo当熟悉Android。整理一下如下： 利用Theme 在Manifest.xml文件中设置style theme，其名称为AppTheme  123&amp;lt;application	android:theme=&amp;quot;@style/AppTheme&amp;q">
   
     <link rel="alternative" href="/atom.xml" title="coding life" type="application/atom+xml">
   
@@ -132,88 +128,99 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-BLE超低功耗ULP的实现原理" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Activity之间转场动画" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      BLE超低功耗ULP的实现原理
+      Activity之间转场动画
     </h1>
   
 
         
-        <a href="/2019/09/25/BLE超低功耗ULP的实现原理/" class="archive-article-date">
-  	<time datetime="2019-09-25T07:47:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-25</time>
+        <a href="/2019/09/27/Activity之间转场动画/" class="archive-article-date">
+  	<time datetime="2019-09-27T06:26:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="BLE超低功耗ULP的实现原理"><a href="#BLE超低功耗ULP的实现原理" class="headerlink" title="BLE超低功耗ULP的实现原理"></a>BLE超低功耗ULP的实现原理</h1><p>ble用得不少，也知道ble相对classic bluetooth更省电，那具体是怎么做到省电的呢？</p>
-<h2 id="ble"><a href="#ble" class="headerlink" title="ble"></a>ble</h2><h3 id="超低功耗ULP（Ultra-Low-Power）"><a href="#超低功耗ULP（Ultra-Low-Power）" class="headerlink" title="超低功耗ULP（Ultra Low Power）"></a>超低功耗ULP（Ultra Low Power）</h3><blockquote>
-<p>非常少的广播信道数；标准蓝牙一共有32个信道，而BLE只有3个信道</p>
-</blockquote>
-<ul>
-<li>BLE搜索设备的时间大大缩短；BLE扫描其他设备只需要0.6ms~1.2ms，而标准蓝牙搜索其他设备要22.5ms</li>
-<li>BLE定位其它无线设备所需的功耗要比标准蓝牙技术低10至20倍</li>
-<li>蓝牙低能耗技术的广告信道是经过慎重选择的，可以避免与Wi-Fi发生冲突</li>
-<li>连接成功后，蓝牙低能耗技术就会切换到37个数据信道之一<br><img src="https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/images/ble_standard_bluetooth_wifi_channels.jpg" alt></li>
-<li>尽可能的降低无线开启的时间，1Mbps的原始数据带宽——更大的带宽允许在更短的时间内发送更多的信息。举例来说，具有250kbps带宽的另一种无线技术发送相同信息需要开启的时间要长8倍（消耗更多电池能量）</li>
+        <h1 id="Activity之间转场动画"><a href="#Activity之间转场动画" class="headerlink" title="Activity之间转场动画"></a>Activity之间转场动画</h1><p>Activity之间切换的动画是常见需求，网上搜了一下，大致有五种。肯定还有别的，我也没有别的时间去整理，写写demo当熟悉Android。整理一下如下：</p>
+<h2 id="利用Theme"><a href="#利用Theme" class="headerlink" title="利用Theme"></a>利用Theme</h2><ul>
+<li>在Manifest.xml文件中设置style theme，其名称为<code>AppTheme</code></li>
 </ul>
-<blockquote>
-<p>更加“宽松的”射频参数和发送很短的数据包</p>
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;application</span><br><span class="line">	android:theme=&quot;@style/AppTheme&quot;&gt;</span><br><span class="line">&lt;/application&gt;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>通过这两种方式限制峰值功耗</li>
-<li>更低调制指数还有两个好处，即提高覆盖范围和增强健壮性</li>
-<li>蓝牙低能耗技术使用非常短的数据包——这能使硅片保持在低温状态，低能耗收发器不需要较耗能的再次校准和闭环架构。</li>
+<li>在values文件夹中的styles.xml文件中，针对style文件进行配置，基中可以看到也有一个<code>AppTheme</code>的style，说明是对应关系；</li>
+<li>在这里把名为<code>windowAnimationStyle</code>的样式改成<code>Animation_Fade</code>；</li>
 </ul>
-<blockquote>
-<p>可变连接时间间隔</p>
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt;</span><br><span class="line">        &lt;!-- Customize your theme here. --&gt;</span><br><span class="line">        &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">        &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">        &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">        &lt;item name=&quot;android:windowAnimationStyle&quot;&gt;@style/Animation_Fade&lt;/item&gt;</span><br><span class="line">    &lt;/style&gt;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>蓝牙低能耗技术采用可变连接时间间隔，这个间隔根据具体应用可以设置为几毫秒到几秒不等；因为BLE技术采用非常快速的连接方式，因此平时可以处于“非连接”状态（节省能源）；此时链路两端相互间只是知晓对方，只有在必要时才开启链路，然后在尽可能短的时间内关闭链路</li>
+<li>接着AppTheme的style，在其下面继续创建<code>Animation_Fade</code>的style，供AppTheme调用动画样式。</li>
 </ul>
-<h1 id="BLE蓝牙协议栈架构"><a href="#BLE蓝牙协议栈架构" class="headerlink" title="BLE蓝牙协议栈架构"></a>BLE蓝牙协议栈架构</h1><p>看到一个对协议栈有趣解释：</p>
-<p><img src="https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/images/ble_protocol_arch_example_of_manufacture.jpg" alt></p>
-<p>BLE中所有profile和应用都建构在GAP或GATT之上。</p>
-<p>每一层的含义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=&quot;Animation_Fade&quot;</span><br><span class="line">    parent=&quot;@android:style/Animation.Activity&quot;&gt;</span><br><span class="line">    &lt;item name=&quot;android:activityOpenEnterAnimation&quot;&gt;@anim/fade_in&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;android:activityCloseExitAnimation&quot;&gt;@anim/fade_out&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>PHY层==工作车间</p>
-<p>  1Mbps自适应跳频GFSK（高斯频移键控），运行在免证的2.4GHz</p>
-</li>
-<li><p>LL层==RF控制器==控制室</p>
-<p>  控制设备处于准备（standby）、广播、监听/扫描 （scan）、初始化、连接，这五种状态中一种。</p>
-<p>  五种状态切换描述为：未连接时，设备广播信息（向周围邻居讲“我来了”），另外一个设备一直监听或按需扫描（看看有没有街坊邻居家常里短可聊，打招呼“哈，你来啦”），</p>
-<p>  两个设备连接初始化（搬几把椅子到院子），设备连接上了（开聊）。</p>
-<p>  发起聊天的设备为主设备，接受聊天的设备为从设备，同一次聊天只能有一个意见领袖，即主设备和从设备不能切换。</p>
-</li>
-<li><p>HCI层==接口层==通信部</p>
-<p>  向上为主机提供软件应用程序接口（API），对外为外部硬件控制接口，可以通过串口、SPI、USB来实现设备控制</p>
-</li>
-<li><p>L2CAP层==物流部</p>
-<p>  行李打包和拆封处，提供数据封装服务</p>
-</li>
-<li><p>SM层==保卫处</p>
-<p>  提供配对和密匙分发，实现安全连接和数据交换</p>
-</li>
-<li><p>ATT层==库房</p>
-<p>  负责数据检索</p>
-</li>
-<li><p>GATT层==出纳/库房前台</p>
-<p>  出纳负责处理向上与应用打交道，而库房前台负责向下把检索任务子进程交给ATT库房去做，<br>  其关键工作是把为检索工作提供合适的profile结构，而profile由检索关键词（characteristics）组成。</p>
-</li>
-<li><p>GAP层==秘书处</p>
-<p>  对上级，提供应用程序接口<br>  对下级，管理各级职能部门，尤其是指示LL层控制室五种状态切换，指导保卫处做好机要工作</p>
-</li>
+<li>这里的item有4种：</li>
 </ul>
-<pre><code>[参考链接1](https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/ble_proto_arch.html)
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>activityOpenEnterAnimation</td>
+<td>用于设置打开新的Activity并进入新的Activity展示的动画</td>
+</tr>
+<tr>
+<td>activityOpenExitAnimation</td>
+<td>用于设置打开新的Activity并销毁之前的Activity展示的动画</td>
+</tr>
+<tr>
+<td>activityCloseEnterAnimation</td>
+<td>用于设置关闭当前Activity进入上一个Activity展示的动画</td>
+</tr>
+<tr>
+<td>activityCloseExitAnimation</td>
+<td>用于设置关闭当前Activity时展示的动画</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>可以注意到上方有<code>fade_in</code>和<code>fade_out</code>两种动画关键字，我们在anim的文件夹中创建同样名称的两个xml文件，如果没有anim文件夹则自行创建。</li>
+<li>其中的内容如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</span><br><span class="line">	 &lt;alpha</span><br><span class="line">	        android:fromAlpha=&quot;1.0&quot;</span><br><span class="line">	        android:toAlpha=&quot;0.0&quot;</span><br><span class="line">	        android:duration=&quot;300&quot;</span><br><span class="line">	        android:interpolator=&quot;@android:anim/accelerate_interpolator&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/alpha&gt;</span><br><span class="line">    &lt;translate</span><br><span class="line">        android:fromXDelta=&quot;0.0&quot;</span><br><span class="line">        android:toXDelta=&quot;100%p&quot;</span><br><span class="line">        android:duration=&quot;300&quot;</span><br><span class="line">        android:interpolator=&quot;@android:anim/accelerate_interpolator&quot;</span><br><span class="line">        &gt;</span><br><span class="line">    &lt;/translate&gt;</span><br><span class="line">&lt;/set&gt;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">解释：</span><br><span class="line">translate//位移</span><br><span class="line">rotate//旋转</span><br><span class="line">scale//缩放</span><br><span class="line">alpha//透明</span><br><span class="line">set//设置</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>以上是全局采用相同的动画，如果要单独设置某个activity的动画，可以在Manifest.xml文件中进行配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity</span><br><span class="line">android:name=&quot;.View.xxxActivity&quot;</span><br><span class="line">android:label=&quot;@string/xxxActivity&quot;</span><br><span class="line">android:theme=&quot;@style/AppTheme&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="这种方式最好还是适用于全局统一转场动画的场景，如果单个activity需要单独使用，采用了这种方式的话仍然会受到影响。例如：A，B，C三个activity，AC采用统一theme，B单独应用不同theme，从A到C的动画是期望的样式，B到C的动画进入的时候会是期望的样子，但C到B返回的时候会是统一theme的样式。"><a href="#这种方式最好还是适用于全局统一转场动画的场景，如果单个activity需要单独使用，采用了这种方式的话仍然会受到影响。例如：A，B，C三个activity，AC采用统一theme，B单独应用不同theme，从A到C的动画是期望的样式，B到C的动画进入的时候会是期望的样子，但C到B返回的时候会是统一theme的样式。" class="headerlink" title="这种方式最好还是适用于全局统一转场动画的场景，如果单个activity需要单独使用，采用了这种方式的话仍然会受到影响。例如：A，B，C三个activity，AC采用统一theme，B单独应用不同theme，从A到C的动画是期望的样式，B到C的动画进入的时候会是期望的样子，但C到B返回的时候会是统一theme的样式。"></a>这种方式最好还是适用于全局统一转场动画的场景，如果单个activity需要单独使用，采用了这种方式的话仍然会受到影响。例如：A，B，C三个activity，AC采用统一theme，B单独应用不同theme，从A到C的动画是期望的样式，B到C的动画进入的时候会是期望的样子，但C到B返回的时候会是统一theme的样式。</h4><h2 id="利用overridePendingTransition"><a href="#利用overridePendingTransition" class="headerlink" title="利用overridePendingTransition"></a>利用overridePendingTransition</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">startActivity(intent);</span><br><span class="line">overridePendingTransition(R.anim.fade_in, R.anim.fade_out);</span><br></pre></td></tr></table></figure>
+<p>跳转后调用<code>overridePendingTransition</code>方法，传入两个anim样式，一个是进入的样式，一个是返回的样式，较上种办法更为灵活。</p>
+<h2 id="利用ActivityOptions自带的效果"><a href="#利用ActivityOptions自带的效果" class="headerlink" title="利用ActivityOptions自带的效果"></a>利用ActivityOptions自带的效果</h2><p>在将要显示的activity中的onCreate方法中使用以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">    getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);</span><br><span class="line">    Transition explode = TransitionInflater.from(this).inflateTransition(android.R.transition.explode);</span><br><span class="line">    getWindow().setEnterTransition(explode);</span><br><span class="line"></span><br><span class="line">    setContentView(R.layout.activity_third);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>requestFeature</code>方法必须在<code>setContentView</code>之前调用。<br>接着在跳转发起方使用以下代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent itnt = new Intent(this, ThirdAcitivity.class);</span><br><span class="line">startActivity(itnt, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());</span><br></pre></td></tr></table></figure>
+<h2 id="利用ActivityOptions通过style形式处理"><a href="#利用ActivityOptions通过style形式处理" class="headerlink" title="利用ActivityOptions通过style形式处理"></a>利用ActivityOptions通过style形式处理</h2><p>先在res创建个文件夹<code>transition</code>，再创建一个资源文件<code>explode</code>，内容改成以下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;transitionSet xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;explode</span><br><span class="line">        android:interpolator=&quot;@android:interpolator/bounce&quot;&gt;&lt;/explode&gt;</span><br><span class="line">&lt;/transitionSet&gt;</span><br></pre></td></tr></table></figure>
+<p>再去到values文件夹中的styles文件将app theme主题中增添以下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;item name=&quot;android:windowEnterTransition&quot;&gt;@transition/explode&lt;/item&gt;</span><br><span class="line">&lt;item name=&quot;android:windowExitTransition&quot;&gt;@transition/explode&lt;/item&gt;</span><br></pre></td></tr></table></figure>
+<p>如此整个项目如果没有特别指定的情况下，过度动画则变成explode的样式。</p>
+<h2 id="共享组件过渡动画"><a href="#共享组件过渡动画" class="headerlink" title="共享组件过渡动画"></a>共享组件过渡动画</h2><p>从一个view跳转到下一个activity的view，通过对这两个view采用相同的transitionName执行过渡动画。<br>比如点击某个button则跳转到其它activity，则将此button和transitionName和activity的view进行绑定相同的transitionName即可，代码如下：</p>
+<p>xml文件中找到button并增加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">    android:id=&quot;@+id/fifth_button&quot;</span><br><span class="line">    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">    android:text=&quot;组件共享过渡动画&quot;</span><br><span class="line">    app:layout_constraintLeft_toLeftOf=&quot;parent&quot;</span><br><span class="line">    app:layout_constraintRight_toRightOf=&quot;parent&quot;</span><br><span class="line">    app:layout_constraintTop_toBottomOf=&quot;@+id/fourth_button&quot;</span><br><span class="line">    android:layout_marginTop=&quot;20dp&quot;</span><br><span class="line">    android:transitionName=&quot;sharedTransitionName&quot;</span><br><span class="line">    /&gt;</span><br></pre></td></tr></table></figure>
+<p>xml文件中找到activity最上层的路径添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;android.support.constraint.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    tools:context=&quot;.FifthActivity&quot;</span><br><span class="line">    android:transitionName=&quot;sharedTransitionName&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android.support.constraint.ConstraintLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>最后在跳转触发的地方更新以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent itnt = new Intent(this, FifthActivity.class);</span><br><span class="line">startActivity(itnt, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, btn, &quot;sharedTransitionName&quot;).toBundle());</span><br></pre></td></tr></table></figure>
+<p>以上则是五种过渡动画的方法，各有自适应的业务场景，视实际情况自行选择。</p>
+<p>作为一个资深iOS让我来做Android，权当增长见识了，加个油。</p>
+<p><a href="https://developer.android.com/training/transitions/start-activity" target="_blank" rel="noopener">Android官方说明 – Start an activity using an animation</a></p>
+<p><a href="https://www.jianshu.com/p/07441dedde03" target="_blank" rel="noopener">参考链接 – Android Activity 跳转动画设置</a></p>
 
-[参考链接2](https://www.crifan.com/files/doc/docbook/bluetooth_intro/release/htmls/ble_ultra_low_power.html)
-</code></pre>
       
 
       
@@ -221,17 +228,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ble</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -245,18 +241,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/09/27/Activity之间转场动画/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Activity之间转场动画
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/09/23/Runloop/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Runloop详解</div>
+    <a href="/2019/09/25/BLE超低功耗ULP的实现原理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">BLE超低功耗ULP的实现原理</div>
       <i class="icon-circle-right"></i>
     </a>
   
