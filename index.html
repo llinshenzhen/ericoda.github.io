@@ -181,6 +181,94 @@
             
 
   
+    <article id="post-shell脚本查看git最近改变的文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/11/21/shell脚本查看git最近改变的文件/">shell脚本查看git最近改变的文件</a>
+	
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/11/21/shell脚本查看git最近改变的文件/" class="archive-article-date">
+        <time datetime="2019-11-21T08:12:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-21</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>最近在做安卓平板适配，由于项目是由另外一个团队的同事在开发，我只针对layout做出横竖屏适配即可。但由于他们每天提交大量代码，我也不知道他们修改了哪些layout文件。所以我就需要查看git日志，通过时间来判断是否需要作出调整，一个个看文件是不可能的，所以就写了个脚本。其中的核心命令就是<code>git log --after=&quot;2019-11-11&quot; xxx.xml</code>个命令，能查看某个文件在指定日期之后有没有提交。</p>
+<p>shell的判断有个坑，就是要这个命令输出的结如果有符合条件的是字符串类型，如果没有就是data类型，我开始以为是数组，所以用长度去判断，一直都是4，原来不是。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">currentpath=$PWD</span><br><span class="line"></span><br><span class="line">folderpath=/Users/doubll/workspace/eufySecurity-Android/android/BatteryCam/app/src/main/res/layout</span><br><span class="line"></span><br><span class="line">cd $folderpath</span><br><span class="line"></span><br><span class="line">files=$(ls $folderpath)</span><br><span class="line"></span><br><span class="line">for filename in $files</span><br><span class="line">do</span><br><span class="line">time=&quot;2019-11-11&quot;</span><br><span class="line">result=$(git log --after=$time $filename)</span><br><span class="line">echo $result|grep [a-zA-Z]&gt;/dev/null</span><br><span class="line">if [ $? -eq 0 ];then</span><br><span class="line">echo $filename</span><br><span class="line">echo &quot;$&#123;filename&#125;&quot; &gt;&gt; changed_files.txt</span><br><span class="line">fi</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">cd $currentpath</span><br></pre></td></tr></table></figure>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">other</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/11/21/shell脚本查看git最近改变的文件/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-查看IPA包签名信息" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -945,92 +1033,10 @@
 
 
   
-    <article id="post-hello_world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
   
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2017/05/04/hello_world/">Hello blog</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2017/05/04/hello_world/" class="archive-article-date">
-        <time datetime="2017-05-04T03:09:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-04</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Hello blog. TTTest!</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">other</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2017/05/04/hello_world/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1144,7 +1150,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ios</a>
+                <a href="javascript:void(0)" class="js-tag color4">ble</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1152,11 +1158,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">other</a>
+                <a href="javascript:void(0)" class="js-tag color4">ios</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ble</a>
+                <a href="javascript:void(0)" class="js-tag color1">other</a>
               </li>
              
               <li class="article-tag-list-item">
