@@ -1,27 +1,25 @@
-ARC 是 iOS 中管理引用计数的技术，帮助 iOS 实现垃圾自动回收，具体实现的原理是由编译器进行管理的，同时运行时库协助编译器辅助完成。主要涉及到 Clang （LLVM 编译器） 和 objc4 运行时库。
-本文主要内容由修饰符 \_\_strong 、 \_\_weak 、 \_\_autorelease 拓展开，分别延伸出引用计数、弱引用表、自动释放池等实现原理。在阅读本文之前，你可以看看下面几个问题：
+ARC 是 iOS 中管理引用计数的技术，帮助 iOS 实现垃圾自动回收，具体实现的原理是由编译器进行管理的，同时运行时库协助编译器辅助完成。
 
 - **在 ARC 下如何存储引用计数？**
 - **如`[NSDictionary dictionary]`方法创建的对象在 ARC 中有什么不同之处。**
 - **弱引用表的数据结构。**
 - **解释一下自动释放池中的 Hot Page 和 Cold Page。**
-  如果上述几个问题你已经非常清楚，那本文可能对你的帮助有限，但如果你对这几个问题还存有疑问，那相信本文一定能解答你的疑问。
 
 ## 一、Clang
 
 ---
 
 在 Objective-C 中，对象的引用关系由引用修饰符来决定，如`__strong`、`__weak`、`__autorelease`等等，编译器会根据不同的修饰符生成不同逻辑的代码来管理内存。
-首先看看 Clang 在其中具体起到哪些作用，我们可以在命令行使用下面的命令来将 Objective-C 代码转成 LLVM 中间码：
+首先看看 Clang 在其中具体起到哪些作用，可以在命令行使用下面的命令来将 Objective-C 代码转成 LLVM 中间码：
 
 ```
-// 切换到你文件路径下
+// 切换到文件路径下
 cd Path
 // 利用 main.m 生成中间码文件 main.ll
 clang -S -fobjc-arc -emit-llvm main.m -o main.ll
 ```
 
-我在`main.m`文件中加入`defaultFunction`方法，然后用命令将其转换成中间码：
+在`main.m`文件中加入`defaultFunction`方法，然后用命令将其转换成中间码：
 
 ```
 void defaultFunction() {
@@ -29,7 +27,7 @@ id obj = [NSObject new];
 }
 ```
 
-执行命令后你可以在文件夹下面发现`main.ll`，它的内容如下：
+执行命令后可以在文件夹下面发现`main.ll`，它的内容如下：
 
 ```
 define void @defaultFunction() #0 {
@@ -103,7 +101,7 @@ uintptr_t extra_rc          : 19;  //->存储引用计数
 };
 ```
 
-其中`nonpointer`、`weakly_referenced`、`has_sidetable_rc`和`extra_rc`都是 ARC 有直接关系的成员变量，其他的大多也有涉及到。
+其中`nonpointer`、`weakly_referenced`、`has_sidetable_rc`和`extra_rc`都是 ARC 有直接关系的成员变量，别的大多也有涉及到。
 
 ```
 struct objc_object {
@@ -122,22 +120,22 @@ class_data_bits_t bits; // class_rw_t * plus custom rr/alloc flags
 };
 ```
 
-`objc_class`继承了`objc_object`，结构如下：
+`objc_class`继承`objc_object`，结构如下：
 
 - `isa`：objc_object 指向类，objc_class 指向元类。
 - `superclass`：指向父类。
 - `cache`：存储用户消息转发优化的方法缓存和 vtable 。
-- `bits`：class_rw_t 和 class_ro_t ，保存了方法、协议、属性等列表和一些标志位。
-  
+- `bits`：class_rw_t 和 class_ro_t ，保存方法、协议、属性等列表和一些标志位。
+
 ## 三、 \_\_strong 修饰符
 
 ---
 
-在 MRC 时代 Retain 修饰符将会使被引用的对象引用计数 + 1 ，在 ARC 中 \_\_strong 修饰符作为其替代者，具体起到什么样的作用？我们可以通过 Clang 将 Objective-C 代码转成 LLVM 来分析其中原理。
+在 MRC 时代 Retain 修饰符将会使被引用的对象引用计数 + 1 ，在 ARC 中 \_\_strong 修饰符作为其替代者，具体起到什么样的作用？可以通过 Clang 将 Objective-C 代码转成 LLVM 来分析其中原理。
 
 ### 3.1 \_\_strong 修饰符的中间码
 
-接下来继续将 Objective-C 代码转成 LLVM 中间码，这次我们试一下`__strong`修饰符：
+接下来继续将 Objective-C 代码转成 LLVM 中间码，这次试一下`__strong`修饰符：
 
 ```
 void strongFunction() {
@@ -170,7 +168,7 @@ objc_release(obj1);
 
 ### 3.2 objc_retain
 
-接下来我们通过分析 objc4 库的源码来了解`objc_retain`和`objc_release`的内部逻辑。先看`objc_retain`具体实现：
+接下来通过分析 objc4 库的源码来了解`objc_retain`和`objc_release`的内部逻辑。先看`objc_retain`具体实现：
 
 ```
 id objc_retain(id obj) {
@@ -246,7 +244,7 @@ return (id)this;
 - !newisa.nonpointer：未优化的 isa ，使用`sidetable_retain()`。
 - newisa.nonpointer：已优化的 isa ， 这其中又分 extra_rc 溢出和未溢出的两种情况。
 - 未溢出时，`isa.extra_rc` + 1 完事。
-- 溢出时，将 `isa.extra_rc` 中一半值转移至`sidetable`中，然后将`isa.has_sidetable_rc`设置为`true`，表示使用了`sidetable`来计算引用次数。
+- 溢出时，将 `isa.extra_rc` 中一半值转移至`sidetable`中，然后将`isa.has_sidetable_rc`设置为`true`，表示使用`sidetable`来计算引用次数。
 
 ### 3.3 objc_release
 
@@ -284,7 +282,7 @@ return false;
 underflow:
 // 处理下溢，从 side table 中借位或者释放
 newisa = oldisa;
-// 如果使用了 sidetable_rc
+// 如果使用 sidetable_rc
 if (slowpath(newisa.has_sidetable_rc)) {
 if (!handleUnderflow) {
 // 调用本函数处理下溢
@@ -356,7 +354,7 @@ return true;
 
 ### 3.4 rootRetainCount
 
-`objc_object::rootRetainCount`方法是用来计算引用计数的。通过前面`rootRetain`和`rootRelease`的源码分析可以看出引用计数会分别存在`isa.extra_rc`和`sidetable`。中，这一点在`rootRetainCount`方法中也得到了体现。
+`objc_object::rootRetainCount`方法是用来计算引用计数的。通过前面`rootRetain`和`rootRelease`的源码分析可以看出引用计数会分别存在`isa.extra_rc`和`sidetable`。中，这一点在`rootRetainCount`方法中也得到体现。
 
 ```
 inline uintptr_t objc_object::rootRetainCount()
@@ -384,7 +382,7 @@ return sidetable_retainCount();
 
 ### 3.5 objc_autoreleaseReturnValue 和 objc_retainAutoreleasedReturnValue
 
-在 MRC 时代有一句话叫 **谁创建谁释放** ，意思是由开发者通过`alloc`、`new`、`copy`和`mutableCopy`等方法创建的对象，需要开发者手动释放，而由其他方法创建并返回的对象返回给用户后也不需要开发者释放，比如说由`[NSMutableArray array]`方法创建的数组，这样的对象默认由自动释放池管理。进入 ARC 时代后，针对返回的对象编译器也做了一些特殊处理，具体通过下面的内容来理解其中奥妙。
+在 MRC 时代有一句话叫 **谁创建谁释放** ，意思是由开发者通过`alloc`、`new`、`copy`和`mutableCopy`等方法创建的对象，需要开发者手动释放，而由别的方法创建并返回的对象返回给用户后也不需要开发者释放，比如说由`[NSMutableArray array]`方法创建的数组，这样的对象默认由自动释放池管理。进入 ARC 时代后，针对返回的对象编译器也做了一些特殊处理，具体通过下面的内容来理解其中奥妙。
 首先将下方创建数组的代码转成中间码：
 
 ```
@@ -413,7 +411,7 @@ objc_release(obj);
 
 相对于用户创建的对象，`[NSMutableArray array]`方法创建返回的对象转换后多出了一个`objc_retainAutoreleasedReturnValue`方法。这涉及到一个最优化处理：
 
-1.  为了节省了一个将对象注册到`autoreleasePool`的操作，在执行`objc_autoreleaseReturnValue`时，根据查看后续调用的方法列表是否包含`objc_retainAutoreleasedReturnValue`方法，以此判断是否走优化流程。
+1.  为了节省一个将对象注册到`autoreleasePool`的操作，在执行`objc_autoreleaseReturnValue`时，根据查看后续调用的方法列表是否包含`objc_retainAutoreleasedReturnValue`方法，以此判断是否走优化流程。
 2.  在执行`objc_autoreleaseReturnValue`时，优化流程将一个标志位存储在 TLS (Thread Local Storage) 中后直接返回对象。
 3.  执行后续方法`objc_retainAutoreleasedReturnValue`时检查 TLS 的标志位判断是否处于优化流程，如果处于优化流程中则直接返回对象，并且将 TLS 的状态还原。
     ![](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/20/16ad59d6a2a5b063~tplv-t2oaga2asx-jj-mark:3024:0:0:0:q75.png)
@@ -448,7 +446,7 @@ return (ReturnDisposition)(uintptr_t)tls_get_direct(RETURN_DISPOSITION_KEY);
 
 `objc_autoreleaseReturnValue`代码逻辑大概分为：
 
-1.  检查调用者方法里后面是否紧跟着调用了`objc_retainAutoreleasedReturnValue`。
+1.  检查调用者方法里后面是否紧跟着调用`objc_retainAutoreleasedReturnValue`。
 2.  保存 ReturnAtPlus1 至 TLS 中。
 3.  使用了优化处理则返回对象，否则加入自动释放池。
     下面是`objc_retainAutoreleasedReturnValue`的源码分析：
@@ -548,7 +546,7 @@ objc_storeStrong(obj, null);
 }
 ```
 
-- weakFunction： 在该方法中声明 \_\_weak 对象后并没有使用到，所以在`objc_initWeak`后，立即释放调用了`objc_release`和`objc_destroyWeak`方法。
+- weakFunction： 在该方法中声明 \_\_weak 对象后并没有使用到，所以在`objc_initWeak`后，立即释放调用`objc_release`和`objc_destroyWeak`方法。
 - weak1Function：该方法中`obj`是强引用，`obj1`是弱引用，`objc_initWeak`、 `objc_destroyWeak`先后成对调用，对应着弱引用变量的初始化和释放方法。
 - weak2Function：和`weak1Function`不同之处是使用了弱引用变量`obj1`，在使用弱引用变量之前，编译器创建了一个临时的强引用对象，在用完后立即释放。
 
@@ -575,7 +573,7 @@ void objc_destroyWeak(id *location) {
 }
 ```
 
-通过源代码可以发现最终都是通过`storeWeak`来实现各自逻辑的，在查看`storeWeak`实现之前，我们要先了解一下它的模板参数的含义：
+通过源代码可以发现最终都是通过`storeWeak`来实现各自逻辑的，在查看`storeWeak`实现之前，要先了解一下它的模板参数的含义：
 
 ```
 storeWeak<DontHaveOld, DoHaveNew, DoCrashIfDeallocating> (location, (objc_object*)newObj);
@@ -663,11 +661,11 @@ return (id)newObj;
 }
 ```
 
-这段代码大概做了这几件事：
+这段代码逻辑如下：
 
 1.  从全局的哈希表`SideTables`中，利用对象本身地址进行位运算后得到对应下标，取得该对象的弱引用表。`SideTables`是一个 64 个元素长度的散列表，发生碰撞时，可能一个`SideTable`中存在多个对象共享一个弱引用表。
 2.  如果有分配新值，则检查新值对应的类是否初始化过，如果没有，则就地初始化。
-3.  如果 location 有指向其他旧值，则将旧值对应的弱引用表进行注销。
+3.  如果 location 有指向旧值，则将旧值对应的弱引用表进行注销。
 4.  如果分配了新值，将新值注册到对应的弱引用表中。将`isa.weakly_referenced`设置为`true`，表示该对象是有弱引用变量，释放时要去清空弱引用表。
 
 #### 4.2.3 weak_register_no_lock 和 weak_unregister_no_lock
@@ -783,7 +781,7 @@ if (!weak_entries) return nil;
 size_t begin = hash_pointer(referent) & weak_table->mask;
 size_t index = begin;
 size_t hash_displacement = 0;
-// 线性探测，如果该下标存储的是其他对象，那往下移，直至找到正确的下标。
+// 线性探测，如果该下标存储的是别的对象，那往下移，直至找到正确的下标。
 while (weak_table->weak_entries[index].referent != referent) {
 index = (index+1) & weak_table->mask; // 不能超过 weak_table 最大长度限制
 // 回到初始下标，异常报错
@@ -801,8 +799,8 @@ return &weak_table->weak_entries[index];
 上述代码就是`weak_table`查找`entry`的过程，也是哈希表寻址过程，使用线性探测的方法解决哈希冲突的问题：
 
 1.  通过被引用对象地址计算获得哈希表下标。
-2.  检查对应下标存储的是不是我们要找到地址，如果是则返回该地址。
-3.  如果不是则继续往下找，直至找到。在下移的过程中，下标不能超过`weak_table`最大长度，同时`hash_displacement`不能超过记录的`max_hash_displacement`最大哈希位移。`max_hash_displacement`是所有插入操作时记录的最大哈希位移，如果超过了，那肯定是出错了。
+2.  检查对应下标存储的是不是要的地址，如果是则返回该地址。
+3.  如果不是则继续往下找，直至找到。在下移的过程中，下标不能超过`weak_table`最大长度，同时`hash_displacement`不能超过记录的`max_hash_displacement`最大哈希位移。`max_hash_displacement`是所有插入操作时记录的最大哈希位移，如果超过，那肯定是出错了。
     下面是`weak_table`插入`entry`的代码实现：
 
 ```
@@ -894,7 +892,7 @@ return grow_refs_and_insert(entry, new_referrer);
 size_t begin = w_hash_pointer(new_referrer) & (entry->mask);
 size_t index = begin;
 size_t hash_displacement = 0;
-// 该下表位置下不为空，发生 hash 碰撞了,
+// 该下表位置下不为空，发生 hash 碰撞,
 while (entry->referrers[index] != nil) {
 // 后移
 hash_displacement++;
@@ -1107,7 +1105,7 @@ objc_autoreleasePoolPop(token);
 
 ### 5.2 自动释放池的预备知识
 
-在继续往下看之前，我们需要先了解一些关于自动释放池的相关知识：
+在继续往下看之前，需要先了解一些关于自动释放池的相关知识：
 自动释放池都是由一个或者多个`AutoreleasePoolPage`组成，`page`的 SIZE 为 4096 bytes ，它们通过`parent`和`child`指针组成一个双向链表。
 
 - `hotPage`：是当前正在使用的`page`，操作都是在`hotPage`上完成，一般处于链表末端或者倒数第二个位置。存储在 TLS 中，可以理解为一个每个线程共享一个自动释放池链表。
@@ -1335,12 +1333,10 @@ setHotPage(this);
 }
 ```
 
-这段代码大致逻辑：
+这段代码逻辑如下：
 
 1.  判断栈顶指针`next`和`stop`不是指向同一块内存地址时，继续出栈。
 2.  判断当前`page`如果被清空，则继续清理链表中的上一个`page`。
 3.  出栈，栈顶指针往下移，清空栈顶内存。
 4.  如果当前出栈的不是`POOL_BOUNDARY`，则调用`objc_release`引用计数 - 1 。
     体会
-    --
-    通过阅读 objc4 源码，将以前关于 ARC 的知识串联起来，其中对细节的实现原理理解得更加透彻。
