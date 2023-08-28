@@ -222,3 +222,31 @@
 2023-08-28 16:31:01,619 - INFO - 备份了 /Users/lin/Work/Site/readings/docs/前端/_sidebar.md
 2023-08-28 16:31:01,619 - INFO - 打开 /Users/lin/Work/Site/readings/docs/前端/_sidebar.md 进行写入
 2023-08-28 16:31:01,619 - INFO - 脚本运行结束
+2023-08-28 20:56:47,096 - INFO - 脚本开始运行
+2023-08-28 20:56:47,099 - INFO - 备份了 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md
+2023-08-28 20:56:47,099 - INFO - 打开 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 进行写入
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：查看IPA包签名信息
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：Block
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：Runloop
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：Charts库使用经验
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：ARC介绍
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：Interview
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：BLE超低功耗ULP的实现原理
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：Design-Patterns
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：Activity之间转场动画
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：iOS中IPA包的签名机制
+2023-08-28 20:56:47,099 - INFO - 在 /Users/lin/Work/Site/readings/docs/APP/_sidebar.md 中添加链接：shell脚本查看git最近改变的文件
+2023-08-28 20:56:47,099 - INFO - 备份了 /Users/lin/Work/Site/readings/docs/算法/_sidebar.md
+2023-08-28 20:56:47,099 - INFO - 打开 /Users/lin/Work/Site/readings/docs/算法/_sidebar.md 进行写入
+2023-08-28 20:56:47,100 - INFO - 备份了 /Users/lin/Work/Site/readings/docs/工程/_sidebar.md
+2023-08-28 20:56:47,100 - INFO - 打开 /Users/lin/Work/Site/readings/docs/工程/_sidebar.md 进行写入
+2023-08-28 20:56:47,100 - INFO - 在 /Users/lin/Work/Site/readings/docs/工程/_sidebar.md 中添加链接：查看IPA包签名信息
+2023-08-28 20:56:47,100 - INFO - 备份了 /Users/lin/Work/Site/readings/docs/后端/_sidebar.md
+2023-08-28 20:56:47,100 - INFO - 打开 /Users/lin/Work/Site/readings/docs/后端/_sidebar.md 进行写入
+2023-08-28 20:56:47,101 - INFO - 备份了 /Users/lin/Work/Site/readings/docs/前沿/_sidebar.md
+2023-08-28 20:56:47,101 - INFO - 打开 /Users/lin/Work/Site/readings/docs/前沿/_sidebar.md 进行写入
+2023-08-28 20:56:47,101 - INFO - 备份了 /Users/lin/Work/Site/readings/docs/管理/_sidebar.md
+2023-08-28 20:56:47,101 - INFO - 打开 /Users/lin/Work/Site/readings/docs/管理/_sidebar.md 进行写入
+2023-08-28 20:56:47,101 - INFO - 备份了 /Users/lin/Work/Site/readings/docs/前端/_sidebar.md
+2023-08-28 20:56:47,101 - INFO - 打开 /Users/lin/Work/Site/readings/docs/前端/_sidebar.md 进行写入
+2023-08-28 20:56:47,101 - INFO - 脚本运行结束
