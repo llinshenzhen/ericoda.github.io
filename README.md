@@ -1,2 +1,2 @@
-# readings
-Ethan readings
+# Growth Space
+Self growth record.
