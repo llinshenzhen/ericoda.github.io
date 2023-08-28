@@ -20,8 +20,8 @@ def process_sidebar_files(root_path, log_file):
             # 如果_sidebar.md文件不存在，则创建它
             with open(sidebar_path, "w") as sidebar_file:
                 folder_name = os.path.basename(dirpath)
-                folder_link_name = folder_name.replace(" ", "-").lower()
-                sidebar_file.write(f"[{folder_name}目录](#{folder_link_name})\n\n")
+                # 修复：将生成的目录链接名称保持严格一致
+                sidebar_file.write(f"[{folder_name}目录](#{folder_name})\n\n")
                 logging.info(f"创建了 {sidebar_path}")
         else:
             # 备份_sidebar.md文件
@@ -31,8 +31,8 @@ def process_sidebar_files(root_path, log_file):
         with open(sidebar_path, "w") as sidebar_file:
             logging.info(f"打开 {sidebar_path} 进行写入")
             folder_name = os.path.basename(dirpath)
-            folder_link_name = folder_name.replace(" ", "-").lower()
-            sidebar_file.write(f"[{folder_name}目录](#{folder_link_name})\n\n")
+            # 修复：将生成的目录链接名称保持严格一致
+            sidebar_file.write(f"[{folder_name}目录](#{folder_name})\n\n")
             
             # 添加“返回上一级”链接
             parent_dir = os.path.dirname(sidebar_path)
