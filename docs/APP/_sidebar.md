@@ -1,4 +1,4 @@
-[APP目录](#APP)
+[APP目录](#app)
 
 - [返回上一级](./)
 
@@ -11,4 +11,5 @@
 - [BLE超低功耗ULP的实现原理](APP/BLE超低功耗ULP的实现原理.md)
 - [Design-Patterns](APP/Design-Patterns.md)
 - [Activity之间转场动画](APP/Activity之间转场动画.md)
+- [iOS中IPA包的签名机制](APP/iOS中IPA包的签名机制.md)
 - [shell脚本查看git最近改变的文件](APP/shell脚本查看git最近改变的文件.md)
